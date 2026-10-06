@@ -38,8 +38,12 @@ SignBridge 3D combines a searchable sign dictionary, a guided beginner curriculu
 
 | | |
 |---|---|
-| Production | _(deployed via Vercel — see [Deployment](#deployment))_ |
+| Production | https://signbridge-3d.vercel.app |
+| Source | https://github.com/deepsh3969/signbridge-3d |
 | Local dev | `http://localhost:5173` after `npm run dev` |
+
+The production deployment was verified headlessly: all 13 routes plus a mobile
+viewport render with **no console or page errors**.
 
 ---
 

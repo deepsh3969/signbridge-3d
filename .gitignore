@@ -47,3 +47,8 @@ coverage/
 .cache/
 .temp/
 .tmp/
+
+# Vercel (project link + local env; `.env.example` stays tracked)
+.vercel/
+.env.local
+
