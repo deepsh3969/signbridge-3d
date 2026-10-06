@@ -1,0 +1,323 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   SignBridge 3D — Design tokens
+   Modern, premium, educational, accessible.
+--------------------------------------------------------------------------- */
+@theme {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
+  --font-display:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+
+  /* Brand — indigo/violet with a teal accent */
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+
+  --color-accent-300: #5eead4;
+  --color-accent-400: #2dd4bf;
+  --color-accent-500: #14b8a6;
+  --color-accent-600: #0d9488;
+  --color-accent-700: #0f766e;
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-2: #f8fafc;
+  --color-surface-3: #f1f5f9;
+  --color-ink: #0f172a;
+  --color-ink-2: #475569;
+  --color-ink-3: #64748b;
+  --color-line: #e2e8f0;
+
+  --color-canvas: #f6f7fb;
+  --color-canvas-dark: #0b1220;
+  --color-surface-dark: #111a2c;
+  --color-surface-dark-2: #16203400;
+  --color-line-dark: #24314a;
+
+  --radius-xl2: 1.25rem;
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.14);
+  --shadow-pop: 0 10px 40px -12px rgba(15, 23, 42, 0.28);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-pulse-soft: pulseSoft 2.6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes pulseSoft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.55;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+:root {
+  --sb-font-scale: 1;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html {
+  font-size: calc(16px * var(--sb-font-scale));
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html[data-font-size="sm"] {
+  --sb-font-scale: 0.9;
+}
+html[data-font-size="md"] {
+  --sb-font-scale: 1;
+}
+html[data-font-size="lg"] {
+  --sb-font-scale: 1.15;
+}
+html[data-font-size="xl"] {
+  --sb-font-scale: 1.32;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+html.dark body {
+  background: var(--color-canvas-dark);
+  color: #e6edf7;
+}
+
+/* High contrast mode */
+html.contrast-high {
+  --color-line: #0f172a;
+  --color-ink-2: #1e293b;
+  --color-ink-3: #334155;
+}
+html.contrast-high.dark {
+  --color-line: #e2e8f0;
+  --color-ink-2: #dbe6f5;
+  --color-ink-3: #c3d2e6;
+}
+html.contrast-high .sb-card {
+  border-width: 2px !important;
+  border-color: var(--color-line) !important;
+}
+html.contrast-high .sb-btn {
+  border-width: 2px !important;
+}
+html.contrast-high .sb-muted {
+  color: var(--color-ink-2) !important;
+}
+
+/* Focus visibility — never remove */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-brand-600);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+html.dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: var(--color-accent-400);
+}
+
+/* Reduced motion */
+html.motion-reduced *,
+html.motion-reduced *::before,
+html.motion-reduced *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Skip link */
+.sb-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-brand-700);
+  color: #fff;
+  border-radius: 0 0 0.75rem 0;
+  font-weight: 600;
+}
+.sb-skip:focus {
+  left: 0;
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-900);
+}
+html.dark ::selection {
+  background: var(--color-brand-700);
+  color: #fff;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+html.dark * {
+  scrollbar-color: #334155 transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Components
+--------------------------------------------------------------------------- */
+@layer components {
+  .sb-card {
+    @apply rounded-2xl border border-line bg-surface shadow-card;
+  }
+  html.dark .sb-card {
+    @apply border-line-dark bg-surface-dark;
+  }
+
+  .sb-muted {
+    @apply text-ink-2;
+  }
+  html.dark .sb-muted {
+    color: #9fb0c9;
+  }
+
+  .sb-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-semibold
+      transition-all duration-150 select-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .sb-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-semibold
+      transition-all duration-150 select-none disabled:cursor-not-allowed disabled:opacity-50
+      bg-brand-700 text-white hover:bg-brand-800 active:translate-y-px;
+    box-shadow: 0 8px 20px -10px rgba(67, 56, 202, 0.9);
+  }
+  html.dark .sb-btn-primary {
+    @apply bg-brand-500 hover:bg-brand-400;
+  }
+
+  .sb-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-semibold
+      transition-all duration-150 select-none disabled:cursor-not-allowed disabled:opacity-50
+      border border-line bg-surface text-ink hover:bg-surface-3;
+  }
+  html.dark .sb-btn-secondary {
+    @apply border-line-dark bg-slate-800/70 text-slate-100 hover:bg-slate-700/70;
+  }
+
+  .sb-btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-semibold
+      transition-all duration-150 select-none disabled:cursor-not-allowed disabled:opacity-50
+      bg-accent-600 text-white hover:bg-accent-700 active:translate-y-px;
+  }
+
+  .sb-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-base font-semibold
+      transition-all duration-150 select-none disabled:cursor-not-allowed disabled:opacity-50
+      text-ink-2 hover:bg-surface-3;
+  }
+  html.dark .sb-btn-ghost {
+    @apply text-slate-300 hover:bg-slate-800/70;
+  }
+
+  .sb-input {
+    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink
+      placeholder:text-ink-3 focus:border-brand-500;
+  }
+  html.dark .sb-input {
+    @apply border-line-dark bg-slate-900/60 text-slate-100 placeholder:text-slate-500;
+  }
+
+  .sb-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-sm font-medium text-ink-2;
+  }
+  html.dark .sb-chip {
+    @apply border-line-dark bg-slate-800/60 text-slate-300;
+  }
+
+  .sb-label {
+    @apply mb-1.5 block text-sm font-semibold text-ink-2;
+  }
+  html.dark .sb-label {
+    color: #a9bbd4;
+  }
+
+  .sb-h1 {
+    @apply text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl;
+  }
+  html.dark .sb-h1 {
+    @apply text-slate-50;
+  }
+
+  .sb-section-title {
+    @apply text-2xl font-bold tracking-tight text-ink sm:text-3xl;
+  }
+  html.dark .sb-section-title {
+    @apply text-slate-50;
+  }
+
+  .sb-surface-grid {
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+}
+
+/* Utility helpers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
